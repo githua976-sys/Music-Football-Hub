@@ -1,9 +1,12 @@
-import AppRoutes from "./routes/AppRoutes";
+import Home from "../Pages/HomePage";
 
+import Navbar from "../components/Navbar"; 
 function App() {
   return (
     <div className="bg-gray-900 min-h-screen">
-      <AppRoutes />
+      <AppRoutes/>
+      <Navbar />
+      <Home  />
     </div>
   );
 }
