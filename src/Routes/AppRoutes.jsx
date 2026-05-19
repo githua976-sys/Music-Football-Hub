@@ -3,8 +3,9 @@ import { BrowserRouter, Route, Routes } from "react-router-dom"
 import MainLayout from "../components/layout/MainLayout";
 
 
-import Music from "../pages/Music";
 
+import Favorites from "../pages/Favorites";
+import About from "../pages/About";
 
 
 import Home from "../Pages/HomePage";
@@ -18,8 +19,8 @@ const App = () => {
          <Route path="/" element ={<Home/>}/>
           <Route path="/Music" element ={<Music/>}/>
           <Route path="/Football" element ={<FootballPage/>}/>
-          <Route path="/Favorites" element ={<>}/>
-          <Route path="/About" element ={<About>}/>
+          <Route path="/Favorites" element ={<Favorites/>}/>
+          <Route path="/About" element ={<About/>}/>
 
         </Route>
       </Routes>
