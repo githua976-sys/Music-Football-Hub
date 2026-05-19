@@ -1,10 +1,20 @@
 import { Play } from "lucide-react";
 
+import { usePlayer } from "../../context/PlayerContext";
+
 const MusicCard = ({ image, title, artist }) => {
+
+  const { playSong } = usePlayer();
+
+  const song = {
+    image,
+    title,
+    artist,
+  };
+
   return (
     <div className="bg-gray-900 rounded-2xl p-4 hover:bg-gray-800 transition group cursor-pointer">
 
-      {/* Album Cover */}
       <div className="relative overflow-hidden rounded-xl">
 
         <img
@@ -14,7 +24,10 @@ const MusicCard = ({ image, title, artist }) => {
         />
 
         {/* Play Button */}
-        <button className="absolute bottom-3 right-3 bg-green-500 p-3 rounded-full opacity-0 group-hover:opacity-100 transition">
+        <button
+          onClick={() => playSong(song)}
+          className="absolute bottom-3 right-3 bg-green-500 p-3 rounded-full opacity-0 group-hover:opacity-100 transition"
+        >
 
           <Play
             size={20}
@@ -25,10 +38,9 @@ const MusicCard = ({ image, title, artist }) => {
         </button>
       </div>
 
-      {/* Song Info */}
       <div className="mt-4">
 
-        <h3 className="text-white font-semibold truncate">
+        <h3 className="text-white font-semibold">
           {title}
         </h3>
 
