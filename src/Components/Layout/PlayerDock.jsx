@@ -6,80 +6,89 @@ import {
   Volume2,
 } from "lucide-react";
 
+import { usePlayer } from "../../context/PlayerContext";
+
 const PlayerDock = () => {
+
+  const {
+    currentSong,
+    isPlaying,
+    pauseSong,
+    resumeSong,
+    volume,
+    setVolume,
+  } = usePlayer();
+
   return (
     <div className="h-24 bg-black border-t border-gray-800 px-6 flex items-center justify-between">
 
-      {/* Current Song */}
+      {/* Song Info */}
       <div className="flex items-center gap-4">
 
         <img
-          src="https://picsum.photos/60"
+          src={currentSong?.image || "https://picsum.photos/60"}
           alt="album"
           className="w-14 h-14 rounded-lg object-cover"
         />
 
         <div>
+
           <h3 className="font-semibold text-white">
-            Blinding Lights
+            {currentSong?.title || "No song selected"}
           </h3>
 
           <p className="text-sm text-gray-400">
-            The Weeknd
+            {currentSong?.artist || "Unknown artist"}
           </p>
+
         </div>
       </div>
 
-      {/* Player Controls */}
-      <div className="flex flex-col items-center gap-2">
+      {/* Controls */}
+      <div className="flex items-center gap-5">
 
-        <div className="flex items-center gap-5">
+        <button className="text-gray-300">
+          <SkipBack size={20} />
+        </button>
 
-          <button className="text-gray-300 hover:text-white transition">
-            <SkipBack size={20} />
-          </button>
+        <button
+          onClick={
+            isPlaying
+              ? pauseSong
+              : resumeSong
+          }
+          className="bg-green-500 p-3 rounded-full text-black"
+        >
 
-          <button className="bg-green-500 p-3 rounded-full text-black hover:scale-105 transition">
-
+          {isPlaying ? (
+            <Pause size={20} fill="black" />
+          ) : (
             <Play size={20} fill="black" />
+          )}
 
-          </button>
+        </button>
 
-          <button className="text-gray-300 hover:text-white transition">
-            <SkipForward size={20} />
-          </button>
-        </div>
-
-        {/* Progress */}
-        <div className="flex items-center gap-3 w-[300px]">
-
-          <span className="text-xs text-gray-400">
-            1:12
-          </span>
-
-          <input
-            type="range"
-            className="w-full accent-green-500"
-          />
-
-          <span className="text-xs text-gray-400">
-            3:45
-          </span>
-        </div>
+        <button className="text-gray-300">
+          <SkipForward size={20} />
+        </button>
       </div>
 
       {/* Volume */}
       <div className="flex items-center gap-3">
 
-        <Volume2
-          size={20}
-          className="text-gray-300"
-        />
+        <Volume2 size={20} />
 
         <input
           type="range"
+          min="0"
+          max="100"
+          value={volume}
+          onChange={(e) =>
+            setVolume(e.target.value)
+          }
           className="accent-green-500"
         />
+
       </div>
     </div>
   );
