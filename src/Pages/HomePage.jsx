@@ -1,10 +1,10 @@
-import SectionHeader from "../components/shared/SectionHeader";
+import SectionHeader from "../Components/Shared/SectionHeader";
 
-import MusicCard from "../components/music/MusicCard";
+import MusicCard from "../Components/Layout/Music/MusicCard";
 
-import MatchCard from "../components/football/MatchCard";
+import MatchCard from "../Components/football/MatchCard";
 
-import TeamCard from "../components/football/TeamCard";
+import TeamCard from "../Components/football/TeamCard";
 
 const Home = () => {
 

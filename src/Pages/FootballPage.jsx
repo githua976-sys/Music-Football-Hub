@@ -1,10 +1,10 @@
-import SectionHeader from "../components/shared/SectionHeader";
+import SectionHeader from "../Components/Shared/SectionHeader";
 
-import MatchCard from "../components/football/MatchCard";
+import MatchCard from "../Components/football/MatchCard";
 
-import TeamCard from "../components/football/TeamCard";
+import TeamCard from "../Components/football/TeamCard";
 
-import LeagueTable from "../components/football/LeagueTable";
+import LeagueTable from "../Components/football/LeagueTable";
 
 const Football = () => {
 

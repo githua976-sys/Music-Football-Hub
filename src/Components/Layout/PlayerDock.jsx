@@ -6,7 +6,7 @@ import {
   Volume2,
 } from "lucide-react";
 
-import { usePlayer } from "../../context/PlayerContext";
+import { usePlayer } from "../../Context/PlayerContext";
 
 const PlayerDock = () => {
 

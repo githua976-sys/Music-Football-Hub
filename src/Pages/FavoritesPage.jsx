@@ -1,13 +1,8 @@
-import SectionHeader from "../components/shared/SectionHeader";
-
-
-
-import TeamCard from "../components/football/TeamCard";
-
-import MatchCard from "../components/football/MatchCard";
-
-import { useFavorites } from "../context/FavoritesContext";
+import MatchCard from "../Components/football/MatchCard";
+import TeamCard from "../Components/football/TeamCard";
 import MusicCard from "../Components/Layout/Music/MusicCard";
+import SectionHeader from "../Components/Shared/SectionHeader";
+import { useFavorites } from "../Context/FavoriteContext";
 
 const Favorites = () => {
 
