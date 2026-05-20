@@ -1,12 +1,13 @@
 import SectionHeader from "../components/shared/SectionHeader";
 
-import MusicCard from "../components/music/MusicCard";
+
 
 import TeamCard from "../components/football/TeamCard";
 
 import MatchCard from "../components/football/MatchCard";
 
 import { useFavorites } from "../context/FavoritesContext";
+import MusicCard from "../Components/Layout/Music/MusicCard";
 
 const Favorites = () => {
 
