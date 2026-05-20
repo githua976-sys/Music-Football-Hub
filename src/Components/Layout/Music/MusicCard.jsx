@@ -1,6 +1,6 @@
 import { Play } from "lucide-react";
 
-import { usePlayer } from "../../context/PlayerContext";
+import { usePlayer } from "../../../context/PlayerContext";
 
 const MusicCard = ({ image, title, artist }) => {
 

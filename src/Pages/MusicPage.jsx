@@ -1,6 +1,7 @@
+import MusicCard from "../Components/Layout/Music/MusicCard";
 import SectionHeader from "../components/shared/SectionHeader";
 
-import MusicCard from "../components/music/MusicCard";
+;
 
 const Music = () => {
 
