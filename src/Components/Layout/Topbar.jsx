@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../Context/AuthContext";
 
 const Topbar = () => {
-  const { logout } = useAuth();
+  const { logout , user } = useAuth();
 
 const navigate = useNavigate();
 const handleLogout = async () => {
@@ -56,12 +56,28 @@ const handleLogout = async () => {
 
 </button>
 
+<div className="text-right">
+
+  <h3 className="text-sm font-semibold text-white">
+
+    {user?.displayName}
+
+  </h3>
+
+  <p className="text-xs text-gray-400">
+
+    Logged in
+
+  </p>
+
+</div>
+
         {/* Profile Avatar */}
-        <img
-          src="https://i.pravatar.cc/40"
-          alt="profile"
-          className="w-10 h-10 rounded-full border border-gray-700"
-        />
+       <img
+  src={user?.photoURL}
+  alt="profile"
+  className="w-10 h-10 rounded-full border border-gray-700"
+/>
 
       </div>
 
