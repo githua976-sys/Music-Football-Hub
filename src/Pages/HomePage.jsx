@@ -39,7 +39,9 @@ const Home = () => {
   const matches = [
     {
       homeTeam: "Arsenal",
+      homeLogo: "https://picsum.photos/100?5",
       awayTeam: "Chelsea",
+      awayLogo: "https://picsum.photos/100?6",
       score: "2 - 1",
       league: "Premier League",
       status: "LIVE",
@@ -47,7 +49,9 @@ const Home = () => {
 
     {
       homeTeam: "Barcelona",
+      homeLogo: "https://picsum.photos/100?7",
       awayTeam: "Madrid",
+      awayLogo: "https://picsum.photos/100?8",
       score: "1 - 1",
       league: "La Liga",
       status: "LIVE",
@@ -138,7 +142,9 @@ const Home = () => {
             <MatchCard
               key={index}
               homeTeam={match.homeTeam}
+              homeLogo={match.homeLogo}
               awayTeam={match.awayTeam}
+              awayLogo={match.awayLogo}
               score={match.score}
               league={match.league}
               status={match.status}

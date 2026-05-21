@@ -56,6 +56,7 @@ const Favorites = () => {
                 image={song.image}
                 title={song.title}
                 artist={song.artist}
+                preview={song.preview}
               />
             ))}
 
@@ -120,7 +121,9 @@ const Favorites = () => {
               <MatchCard
                 key={index}
                 homeTeam={match.homeTeam}
+                homeLogo={match.homeLogo}
                 awayTeam={match.awayTeam}
+                awayLogo={match.awayLogo}
                 score={match.score}
                 league={match.league}
                 status={match.status}
