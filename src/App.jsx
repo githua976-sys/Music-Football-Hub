@@ -5,12 +5,10 @@ import MainLayout from "./components/layout/MainLayout";
 import AppRoutes from "./routes/AppRoutes";
 
 import LoginPage from "./Pages/LoginPage";
-
-import { useAuth } from "./context/AuthContext";
-
+import { useAuth } from "./Context/AuthContext";
 function App() {
 
-  const { user } = useAuth();
+ const {user} = useAuth();
 
   return (
     <BrowserRouter>
