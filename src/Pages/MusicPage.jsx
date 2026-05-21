@@ -70,6 +70,7 @@ const Music = () => {
     title: item.title,
     artist: item.artist?.name || item.artist || "Unknown",
     image: item.album?.cover_medium || item.album?.cover || "https://picsum.photos/300",
+    preview: item.preview,
   });
 
   const fetchSongs = async (query) => {
@@ -155,6 +156,7 @@ const Music = () => {
               image={song.image}
               title={song.title}
               artist={song.artist}
+              preview={song.preview}
             />
           ))}
 
@@ -178,6 +180,7 @@ const Music = () => {
               image={song.image}
               title={song.title}
               artist={song.artist}
+              preview={song.preview}
             />
           ))}
 

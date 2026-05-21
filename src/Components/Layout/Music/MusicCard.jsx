@@ -2,7 +2,7 @@ import { Play } from "lucide-react";
 
 import { usePlayer } from "../../../Context/PlayerContext";
 
-const MusicCard = ({ image, title, artist }) => {
+const MusicCard = ({ image, title, artist, preview }) => {
 
   const { playSong } = usePlayer();
 
@@ -10,7 +10,10 @@ const MusicCard = ({ image, title, artist }) => {
     image,
     title,
     artist,
+    preview,
   };
+
+  const canPlay = Boolean(preview);
 
   return (
     <div className="bg-gray-900 rounded-2xl p-4 hover:bg-gray-800 transition group cursor-pointer">
@@ -25,8 +28,10 @@ const MusicCard = ({ image, title, artist }) => {
 
         {/* Play Button */}
         <button
-          onClick={() => playSong(song)}
-          className="absolute bottom-3 right-3 bg-green-500 p-3 rounded-full opacity-0 group-hover:opacity-100 transition"
+          onClick={() => canPlay && playSong(song)}
+          disabled={!canPlay}
+          className={`absolute bottom-3 right-3 bg-green-500 p-3 rounded-full opacity-0 group-hover:opacity-100 transition ${!canPlay ? "cursor-not-allowed opacity-50 group-hover:opacity-50" : ""}`}
+          title={canPlay ? "Play preview" : "Preview not available"}
         >
 
           <Play

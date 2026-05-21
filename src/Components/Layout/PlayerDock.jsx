@@ -5,6 +5,7 @@ import {
   SkipForward,
   Volume2,
 } from "lucide-react";
+import { useEffect, useRef } from "react";
 
 import { usePlayer } from "../../Context/PlayerContext";
 
@@ -18,6 +19,42 @@ const PlayerDock = () => {
     volume,
     setVolume,
   } = usePlayer();
+
+  const audioRef = useRef(null);
+
+  useEffect(() => {
+    const audio = audioRef.current;
+    if (!audio) return;
+    if (currentSong?.preview) {
+      if (audio.src !== currentSong.preview) {
+        audio.src = currentSong.preview;
+        audio.load();
+      }
+      if (isPlaying) {
+        audio.play().catch(() => {});
+      }
+    }
+  }, [currentSong, isPlaying]);
+
+  useEffect(() => {
+    const audio = audioRef.current;
+    if (!audio) return;
+    audio.volume = volume / 100;
+  }, [volume]);
+
+  useEffect(() => {
+    const audio = audioRef.current;
+    if (!audio) return;
+    if (isPlaying) {
+      audio.play().catch(() => {});
+    } else {
+      audio.pause();
+    }
+  }, [isPlaying]);
+
+  const handleEnded = () => {
+    pauseSong();
+  };
 
   return (
     <div className="h-24 bg-black border-t border-gray-800 px-6 flex items-center justify-between">
@@ -90,6 +127,8 @@ const PlayerDock = () => {
         />
 
       </div>
+
+      <audio ref={audioRef} onEnded={handleEnded} />
     </div>
   );
 };
