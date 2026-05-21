@@ -7,7 +7,7 @@ import MainLayout from "../Components/Layout/MainLayout";
 
 
 
-import LoginPage from "../Pages/LoginPage";d
+import LoginPage from "../Pages/LoginPage";
 import AboutusPage from "../Pages/AboutusPage";
 import Home from "../Pages/HomePage";
 import FootballPage from "../Pages/FootballPage";
