@@ -1,25 +1,20 @@
-import { Bell, Search } from "lucide-react";
+import { Bell, Search, User, LogOut } from "lucide-react";
 
 import { useNavigate } from "react-router-dom";
+import { useState } from "react";
 
 import { useAuth } from "../../Context/AuthContext";
 
 const Topbar = () => {
 
-  const {
-    logout,
-    user,
-  } = useAuth();
-
+  const { logout, user } = useAuth();
   const navigate = useNavigate();
+  const [showMenu, setShowMenu] = useState(false);
 
   // Logout Function
   const handleLogout = async () => {
-
     await logout();
-
     navigate("/login");
-
   };
 
   return (
@@ -57,42 +52,43 @@ const Topbar = () => {
 
         </button>
 
-        {/* User Info */}
-        <div className="text-right">
+        {/* Account / Avatar */}
+        <div className="relative">
 
-          <h3 className="text-sm font-semibold text-white">
+          <button
+            onClick={() => setShowMenu((s) => !s)}
+            aria-haspopup="true"
+            aria-expanded={showMenu}
+            className="flex items-center gap-3 bg-gray-800 px-3 py-2 rounded-xl hover:bg-gray-700 transition"
+          >
 
-            {user?.displayName || "Guest User"}
+            <User size={18} className="text-gray-200" />
 
-          </h3>
+            <img
+              src={user?.photoURL || "https://i.pravatar.cc/40"}
+              alt="profile"
+              className="w-8 h-8 rounded-full border border-gray-700"
+            />
 
-          <p className="text-xs text-gray-400">
+          </button>
 
-            Logged In
+          {showMenu && (
+            <div className="absolute right-0 mt-2 w-40 bg-gray-900 border border-gray-800 rounded-lg shadow-lg py-2 z-50">
 
-          </p>
+              <button
+                onClick={() => {
+                  setShowMenu(false);
+                  handleLogout();
+                }}
+                className="w-full text-left px-4 py-2 text-sm text-white hover:bg-gray-800 flex items-center gap-2"
+              >
+                <LogOut size={16} /> Logout
+              </button>
+
+            </div>
+          )}
 
         </div>
-
-        {/* Logout Button */}
-        <button
-          onClick={handleLogout}
-          className="bg-red-500 hover:bg-red-600 transition px-4 py-2 rounded-xl text-white text-sm font-medium"
-        >
-
-          Logout
-
-        </button>
-
-        {/* Profile Avatar */}
-        <img
-          src={
-            user?.photoURL ||
-            "https://i.pravatar.cc/40"
-          }
-          alt="profile"
-          className="w-10 h-10 rounded-full border border-gray-700"
-        />
 
       </div>
 
