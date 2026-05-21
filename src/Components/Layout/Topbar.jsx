@@ -1,21 +1,29 @@
 import { Bell, Search } from "lucide-react";
+
 import { useNavigate } from "react-router-dom";
 
 import { useAuth } from "../../Context/AuthContext";
 
 const Topbar = () => {
-  const { logout , user } = useAuth();
-  console.log(user);
 
-const navigate = useNavigate();
-const handleLogout = async () => {
+  const {
+    logout,
+    user,
+  } = useAuth();
 
-  await logout();
+  const navigate = useNavigate();
 
-  navigate("/login");
+  // Logout Function
+  const handleLogout = async () => {
 
-};
+    await logout();
+
+    navigate("/login");
+
+  };
+
   return (
+
     <header className="h-20 border-b border-gray-800 bg-gray-950 px-6 flex items-center justify-between">
 
       {/* Search Bar */}
@@ -48,41 +56,48 @@ const handleLogout = async () => {
           <span className="absolute -top-1 -right-1 w-2 h-2 bg-green-500 rounded-full"></span>
 
         </button>
+
+        {/* User Info */}
+        <div className="text-right">
+
+          <h3 className="text-sm font-semibold text-white">
+
+            {user?.displayName || "Guest User"}
+
+          </h3>
+
+          <p className="text-xs text-gray-400">
+
+            Logged In
+
+          </p>
+
+        </div>
+
+        {/* Logout Button */}
         <button
-  onClick={handleLogout}
-  className="bg-red-500 px-4 py-2 rounded-xl text-white"
->
+          onClick={handleLogout}
+          className="bg-red-500 hover:bg-red-600 transition px-4 py-2 rounded-xl text-white text-sm font-medium"
+        >
 
-  Logout
+          Logout
 
-</button>
-
-<div className="text-right">
-
-  <h3 className="text-sm font-semibold text-white">
-
-    {user?.displayName}
-
-  </h3>
-
-  <p className="text-xs text-gray-400">
-
-    Logged in
-
-  </p>
-
-</div>
+        </button>
 
         {/* Profile Avatar */}
-       <img
-  src={user?.photoURL}
-  alt="profile"
-  className="w-10 h-10 rounded-full border border-gray-700"
-/>
+        <img
+          src={
+            user?.photoURL ||
+            "https://i.pravatar.cc/40"
+          }
+          alt="profile"
+          className="w-10 h-10 rounded-full border border-gray-700"
+        />
 
       </div>
 
     </header>
+
   );
 };
 
