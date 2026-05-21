@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const API_KEY = "YOUR_API_KEY";
+const API_KEY = "8ea7be6803168f368e1be8b025e15f26";
 
 export const getPremierLeagueMatches = async () => {
 
