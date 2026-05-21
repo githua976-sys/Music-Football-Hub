@@ -1,11 +1,24 @@
 import axios from "axios";
 
-const API = axios.create({
-  baseURL: "https://v3.football.api-sports.io",
-  headers: {
-    "x-rapidapi-key": "8ea7be6803168f368e1be8b025e15f26",
-    "x-rapidapi-host": "v3.football.api-sports.io"
-  }
-});
+const API_KEY = "YOUR_API_KEY";
 
-export default API;
+export const getPremierLeagueMatches = async () => {
+
+  const response = await axios.get(
+
+    "https://v3.football.api-sports.io/fixtures",
+
+    {
+      headers: {
+        "x-apisports-key": API_KEY,
+      },
+
+      params: {
+        league: 39,
+        season: 2025,
+      },
+    }
+  );
+
+  return response.data.response;
+};
