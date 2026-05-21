@@ -5,6 +5,7 @@ import { useAuth } from "../../Context/AuthContext";
 
 const Topbar = () => {
   const { logout , user } = useAuth();
+  console.log(user);
 
 const navigate = useNavigate();
 const handleLogout = async () => {
