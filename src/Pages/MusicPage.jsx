@@ -60,9 +60,11 @@ const Music = () => {
     },
   ];
 
+  const [searchQuery, setSearchQuery] = useState("top hits");
   const [trendingSongs, setTrendingSongs] = useState(defaultTrending);
   const [recentSongs, setRecentSongs] = useState(defaultRecent);
   const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(false);
 
   const mapDeezerItem = (item) => ({
     title: item.title,
@@ -70,31 +72,40 @@ const Music = () => {
     image: item.album?.cover_medium || item.album?.cover || "https://picsum.photos/300",
   });
 
-  useEffect(() => {
-    let mounted = true;
+  const fetchSongs = async (query) => {
+    setLoading(true);
+    setError(null);
 
-    const fetchSongs = async () => {
-      try {
-        const results = await searchSongs("top");
-        if (!mounted) return;
-        if (Array.isArray(results) && results.length) {
-          const mapped = results.map(mapDeezerItem);
-          setTrendingSongs(mapped.slice(0, 4));
-          setRecentSongs(mapped.slice(4, 8).length ? mapped.slice(4, 8) : defaultRecent);
-        }
-      } catch (err) {
-        console.error("Music fetch error:", err);
-        setError("Could not load music — using fallback data.");
-        // keep defaults
+    try {
+      const results = await searchSongs(query);
+      if (Array.isArray(results) && results.length) {
+        const mapped = results.map(mapDeezerItem);
+        setTrendingSongs(mapped.slice(0, 4));
+        setRecentSongs(mapped.slice(4, 8).length ? mapped.slice(4, 8) : defaultRecent);
+      } else {
+        setError("No songs found for that search.");
+        setTrendingSongs(defaultTrending);
+        setRecentSongs(defaultRecent);
       }
-    };
+    } catch (err) {
+      console.error("Music fetch error:", err);
+      setError("Could not load music — using fallback data.");
+      setTrendingSongs(defaultTrending);
+      setRecentSongs(defaultRecent);
+    } finally {
+      setLoading(false);
+    }
+  };
 
-    fetchSongs();
-
-    return () => {
-      mounted = false;
-    };
+  useEffect(() => {
+    fetchSongs(searchQuery);
   }, []);
+
+  const handleSearchSubmit = async (event) => {
+    event.preventDefault();
+    if (!searchQuery.trim()) return;
+    await fetchSongs(searchQuery.trim());
+  };
 
   return (
     <div className="space-y-12">
@@ -102,17 +113,29 @@ const Music = () => {
       {/* Hero Banner */}
       <section className="bg-gradient-to-r from-purple-600 to-pink-600 rounded-3xl p-10">
 
-        <h1 className="text-4xl md:text-5xl font-bold text-white">
-
-          Music Zone
-
-        </h1>
+        <h1 className="text-4xl md:text-5xl font-bold text-white">Music Zone</h1>
 
         <p className="text-white/80 mt-4 max-w-2xl">
-
           Discover trending songs, playlists, and your favorite artists.
-
         </p>
+
+        <form className="mt-8 flex flex-col gap-3 sm:flex-row" onSubmit={handleSearchSubmit}>
+          <input
+            value={searchQuery}
+            onChange={(event) => setSearchQuery(event.target.value)}
+            placeholder="Search songs, artists, albums..."
+            className="w-full rounded-2xl border border-gray-700 bg-gray-900 px-4 py-3 text-white outline-none focus:border-green-500"
+          />
+          <button
+            type="submit"
+            className="rounded-2xl bg-white px-6 py-3 text-black font-semibold hover:bg-gray-100 transition"
+          >
+            Search
+          </button>
+        </form>
+
+        {loading && <p className="mt-4 text-sm text-gray-300">Loading songs...</p>}
+        {error && <p className="mt-4 text-sm text-red-400">{error}</p>}
 
       </section>
 
