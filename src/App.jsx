@@ -1,16 +1,19 @@
 import { BrowserRouter } from "react-router-dom";
 
-import MainLayout from "./components/layout/MainLayout";
+import MainLayout from "./Components/Layout/MainLayout";
 
-import AppRoutes from "./routes/AppRoutes";
+import AppRoutes from "./Routes/AppRoutes";
 
 import LoginPage from "./Pages/LoginPage";
+
 import { useAuth } from "./Context/AuthContext";
+
 function App() {
 
- const {user} = useAuth();
+  const { user } = useAuth();
 
   return (
+
     <BrowserRouter>
 
       {
@@ -25,12 +28,12 @@ function App() {
         ) : (
 
           <LoginPage />
-          
 
         )
       }
 
     </BrowserRouter>
+
   );
 }
 
