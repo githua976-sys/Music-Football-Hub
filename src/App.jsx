@@ -1,10 +1,37 @@
-import AppRoutes from "./Routes/AppRoutes";
+import { BrowserRouter } from "react-router-dom";
+
+import MainLayout from "./components/layout/MainLayout";
+
+import AppRoutes from "./routes/AppRoutes";
+
+import LoginPage from "./Pages/LoginPage";
+
+import { useAuth } from "./context/AuthContext";
 
 function App() {
+
+  const { user } = useAuth();
+
   return (
-    <div className="bg-gray-900 min-h-screen">
-      <AppRoutes />
-    </div>
+    <BrowserRouter>
+
+      {
+        user ? (
+
+          <MainLayout>
+
+            <AppRoutes />
+
+          </MainLayout>
+
+        ) : (
+
+          <LoginPage />
+
+        )
+      }
+
+    </BrowserRouter>
   );
 }
 
