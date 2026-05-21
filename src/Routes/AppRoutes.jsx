@@ -7,12 +7,13 @@ import MainLayout from "../Components/Layout/MainLayout";
 
 
 
-
+import LoginPage from "../Pages/LoginPage";d
 import AboutusPage from "../Pages/AboutusPage";
 import Home from "../Pages/HomePage";
 import FootballPage from "../Pages/FootballPage";
 import Favorites from "../Pages/FavoritesPage";
 import Music from "../Pages/MusicPage";
+
 
 const App = () => {
   return (
@@ -24,7 +25,7 @@ const App = () => {
           <Route path="/Football" element ={<FootballPage/>}/>
           <Route path="/Favorites" element ={<Favorites/>}/>
           <Route path="/About" element ={<AboutusPage/>}/>
-
+          <Route path="/login" element={<LoginPage />} />
         </Route>
       </Routes>
     </BrowserRouter>
