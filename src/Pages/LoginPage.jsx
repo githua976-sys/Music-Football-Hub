@@ -12,14 +12,42 @@ const LoginPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (isSignUp && password !== confirmPassword) {
-      alert("Passwords do not match");
+    setError("");
+    
+    if (!email || !password) {
+      setError("Please fill in all fields");
       return;
     }
+
+    if (isSignUp && password !== confirmPassword) {
+      setError("Passwords do not match");
+      return;
+    }
+
+    if (password.length < 6) {
+      setError("Password must be at least 6 characters");
+      return;
+    }
+
     console.log(isSignUp ? "Sign up" : "Login", { email, password });
+  };
+
+  const handleGoogleSignIn = async () => {
+    try {
+      setLoading(true);
+      setError("");
+      await googleSignIn();
+    } catch (err) {
+      setError(err.message || "Google sign-in failed. Please try again.");
+      console.error("Google sign-in error:", err);
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -62,6 +90,13 @@ const LoginPage = () => {
 
         {/* Form */}
         <form className="mt-8 space-y-5" onSubmit={handleSubmit}>
+
+          {/* Error Message */}
+          {error && (
+            <div className="bg-red-500 bg-opacity-20 border border-red-500 text-red-400 px-4 py-3 rounded-lg text-sm">
+              {error}
+            </div>
+          )}
 
           {/* Email */}
           <div>
@@ -128,10 +163,11 @@ const LoginPage = () => {
           {/* Submit Button */}
           <button
             type="submit"
-            className="w-full bg-green-500 hover:bg-green-600 transition py-3 rounded-xl text-white font-semibold"
+            disabled={loading}
+            className="w-full bg-green-500 hover:bg-green-600 disabled:bg-gray-500 disabled:cursor-not-allowed transition py-3 rounded-xl text-white font-semibold"
           >
 
-            {isSignUp ? "Sign Up" : "Login"}
+            {loading ? "Processing..." : (isSignUp ? "Sign Up" : "Login")}
 
           </button>
 
@@ -150,7 +186,9 @@ const LoginPage = () => {
                 setEmail("");
                 setPassword("");
                 setConfirmPassword("");
+                setError("");
               }}
+              type="button"
               className="text-green-400 ml-2 hover:underline font-semibold"
             >
 
@@ -179,13 +217,15 @@ const LoginPage = () => {
 
         {/* Google Button */}
         <button
-          onClick={googleSignIn}
-          className="w-full bg-white text-black py-4 rounded-2xl flex items-center justify-center gap-4 font-semibold hover:scale-105 transition-all duration-300"
+          onClick={handleGoogleSignIn}
+          disabled={loading}
+          type="button"
+          className="w-full bg-white text-black py-4 rounded-2xl flex items-center justify-center gap-4 font-semibold hover:scale-105 hover:bg-gray-100 disabled:hover:scale-100 disabled:bg-gray-300 disabled:cursor-not-allowed transition-all duration-300"
         >
 
           <FcGoogle size={28} />
 
-          Continue with Google
+          {loading ? "Signing in..." : "Continue with Google"}
 
         </button>
 
