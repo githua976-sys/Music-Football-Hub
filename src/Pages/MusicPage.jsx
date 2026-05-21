@@ -1,11 +1,13 @@
+import { useEffect, useState } from "react";
 import MusicCard from "../Components/Layout/Music/MusicCard";
 import SectionHeader from "../Components/Shared/SectionHeader";
+import { searchSongs } from "../Services/Musicapi";
 
 
 const Music = () => {
 
-  // Trending Songs
-  const trendingSongs = [
+  // Default/fallback Trending Songs
+  const defaultTrending = [
     {
       title: "Blinding Lights",
       artist: "The Weeknd",
@@ -31,8 +33,8 @@ const Music = () => {
     },
   ];
 
-  // Recently Played
-  const recentSongs = [
+  // Default/fallback Recently Played
+  const defaultRecent = [
     {
       title: "Essence",
       artist: "Wizkid",
@@ -57,6 +59,42 @@ const Music = () => {
       image: "https://picsum.photos/300?18",
     },
   ];
+
+  const [trendingSongs, setTrendingSongs] = useState(defaultTrending);
+  const [recentSongs, setRecentSongs] = useState(defaultRecent);
+  const [error, setError] = useState(null);
+
+  const mapDeezerItem = (item) => ({
+    title: item.title,
+    artist: item.artist?.name || item.artist || "Unknown",
+    image: item.album?.cover_medium || item.album?.cover || "https://picsum.photos/300",
+  });
+
+  useEffect(() => {
+    let mounted = true;
+
+    const fetchSongs = async () => {
+      try {
+        const results = await searchSongs("top");
+        if (!mounted) return;
+        if (Array.isArray(results) && results.length) {
+          const mapped = results.map(mapDeezerItem);
+          setTrendingSongs(mapped.slice(0, 4));
+          setRecentSongs(mapped.slice(4, 8).length ? mapped.slice(4, 8) : defaultRecent);
+        }
+      } catch (err) {
+        console.error("Music fetch error:", err);
+        setError("Could not load music — using fallback data.");
+        // keep defaults
+      }
+    };
+
+    fetchSongs();
+
+    return () => {
+      mounted = false;
+    };
+  }, []);
 
   return (
     <div className="space-y-12">
