@@ -1,7 +1,5 @@
 import { BrowserRouter } from "react-router-dom";
 
-import MainLayout from "./Components/Layout/MainLayout";
-
 import AppRoutes from "./Routes/AppRoutes";
 
 import LoginPage from "./Pages/LoginPage";
@@ -19,11 +17,7 @@ function App() {
       {
         user ? (
 
-          <MainLayout>
-
-            <AppRoutes />
-
-          </MainLayout>
+          <AppRoutes />
 
         ) : (
 
