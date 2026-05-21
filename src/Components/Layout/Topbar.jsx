@@ -1,6 +1,12 @@
 import { Bell, Search } from "lucide-react";
+import { useNavigate } from "react-router-dom";
+
+import { useAuth } from "../../Context/AuthContext";
 
 const Topbar = () => {
+  const { logout } = useAuth();
+
+const navigate = useNavigate();
   return (
     <header className="h-20 border-b border-gray-800 bg-gray-950 px-6 flex items-center justify-between">
 
