@@ -3,10 +3,24 @@ import { FcGoogle } from "react-icons/fc";
 import { Music, Trophy } from "lucide-react";
 
 import { useAuth } from "../Context/AuthContext";
+import { useState } from "react";
 
 const LoginPage = () => {
 
   const { googleSignIn } = useAuth();
+  const [isSignUp, setIsSignUp] = useState(false);
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (isSignUp && password !== confirmPassword) {
+      alert("Passwords do not match");
+      return;
+    }
+    console.log(isSignUp ? "Sign up" : "Login", { email, password });
+  };
 
   return (
 
@@ -34,20 +48,20 @@ const LoginPage = () => {
 
           <h1 className="text-4xl font-bold text-white">
 
-            Welcome Back
+            {isSignUp ? "Join Us" : "Welcome Back"}
 
           </h1>
 
           <p className="text-gray-400 mt-4">
 
-            Login to Music Football Hub
+            {isSignUp ? "Create an account to Music Football Hub" : "Login to Music Football Hub"}
 
           </p>
 
         </div>
 
         {/* Form */}
-        <form className="mt-8 space-y-5">
+        <form className="mt-8 space-y-5" onSubmit={handleSubmit}>
 
           {/* Email */}
           <div>
@@ -61,7 +75,10 @@ const LoginPage = () => {
             <input
               type="email"
               placeholder="Enter your email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
               className="w-full mt-2 bg-gray-800 border border-gray-700 rounded-xl px-4 py-3 text-white outline-none focus:border-green-500"
+              required
             />
 
           </div>
@@ -78,22 +95,72 @@ const LoginPage = () => {
             <input
               type="password"
               placeholder="Enter your password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
               className="w-full mt-2 bg-gray-800 border border-gray-700 rounded-xl px-4 py-3 text-white outline-none focus:border-green-500"
+              required
             />
 
           </div>
 
-          {/* Login Button */}
+          {/* Confirm Password (Sign Up only) */}
+          {isSignUp && (
+            <div>
+
+              <label className="text-sm text-gray-300">
+
+                Confirm Password
+
+              </label>
+
+              <input
+                type="password"
+                placeholder="Confirm your password"
+                value={confirmPassword}
+                onChange={(e) => setConfirmPassword(e.target.value)}
+                className="w-full mt-2 bg-gray-800 border border-gray-700 rounded-xl px-4 py-3 text-white outline-none focus:border-green-500"
+                required
+              />
+
+            </div>
+          )}
+
+          {/* Submit Button */}
           <button
             type="submit"
             className="w-full bg-green-500 hover:bg-green-600 transition py-3 rounded-xl text-white font-semibold"
           >
 
-            Login
+            {isSignUp ? "Sign Up" : "Login"}
 
           </button>
 
         </form>
+
+        {/* Toggle Link */}
+        <div className="text-center mt-6">
+
+          <p className="text-gray-400 text-sm">
+
+            {isSignUp ? "Already have an account?" : "Don't have an account?"}
+
+            <button
+              onClick={() => {
+                setIsSignUp(!isSignUp);
+                setEmail("");
+                setPassword("");
+                setConfirmPassword("");
+              }}
+              className="text-green-400 ml-2 hover:underline font-semibold"
+            >
+
+              {isSignUp ? "Login" : "Sign Up"}
+
+            </button>
+
+          </p>
+
+        </div>
 
         {/* Divider */}
         <div className="flex items-center gap-4 my-6">
