@@ -12,7 +12,7 @@ import {
   onAuthStateChanged,
 } from "firebase/auth";
 
-import { auth } from "../firebase/firebase";
+import { auth } from "../fireBase/firebase";
 
 const AuthContext = createContext();
 
