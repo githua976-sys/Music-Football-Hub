@@ -47,6 +47,14 @@ const handleLogout = async () => {
           <span className="absolute -top-1 -right-1 w-2 h-2 bg-green-500 rounded-full"></span>
 
         </button>
+        <button
+  onClick={handleLogout}
+  className="bg-red-500 px-4 py-2 rounded-xl text-white"
+>
+
+  Logout
+
+</button>
 
         {/* Profile Avatar */}
         <img
