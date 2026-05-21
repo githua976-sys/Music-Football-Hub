@@ -1,5 +1,4 @@
 import {
-  BrowserRouter,
   Route,
   Routes,
 } from "react-router-dom";
@@ -22,49 +21,45 @@ const App = () => {
 
   return (
 
-    <BrowserRouter>
+    <Routes>
 
-      <Routes>
+      {/* Login Route */}
+      <Route
+        path="/login"
+        element={<LoginPage />}
+      />
 
-        {/* Login Route */}
+      {/* Dashboard Layout */}
+      <Route element={<MainLayout />}>
+
         <Route
-          path="/login"
-          element={<LoginPage />}
+          path="/"
+          element={<Home />}
         />
 
-        {/* Dashboard Layout */}
-        <Route element={<MainLayout />}>
+        <Route
+          path="/music"
+          element={<Music />}
+        />
 
-          <Route
-            path="/"
-            element={<Home />}
-          />
+        <Route
+          path="/football"
+          element={<FootballPage />}
+        />
 
-          <Route
-            path="/music"
-            element={<Music />}
-          />
+        <Route
+          path="/favorites"
+          element={<Favorites />}
+        />
 
-          <Route
-            path="/football"
-            element={<FootballPage />}
-          />
+        <Route
+          path="/about"
+          element={<AboutusPage />}
+        />
 
-          <Route
-            path="/favorites"
-            element={<Favorites />}
-          />
+      </Route>
 
-          <Route
-            path="/about"
-            element={<AboutusPage />}
-          />
-
-        </Route>
-
-      </Routes>
-
-    </BrowserRouter>
+    </Routes>
 
   );
 };
