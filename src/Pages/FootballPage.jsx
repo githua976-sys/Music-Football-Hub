@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useSearchParams } from "react-router-dom";
 import SectionHeader from "../Components/Shared/SectionHeader";
 
 import MatchCard from "../Components/football/MatchCard";
@@ -73,10 +74,13 @@ const Football = () => {
     },
   ];
 
+  const [rawMatches, setRawMatches] = useState(defaultMatches);
+  const [rawTeams, setRawTeams] = useState(defaultTeams);
   const [matches, setMatches] = useState(defaultMatches);
   const [teams, setTeams] = useState(defaultTeams);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
+  const [searchParams] = useSearchParams();
 
   const buildTeamList = (matchList) => {
     const unique = new Map();
@@ -109,12 +113,20 @@ const Football = () => {
       try {
         const data = await getPremierLeagueMatches();
         if (Array.isArray(data) && data.length) {
-          setMatches(data.slice(0, 4));
-          setTeams(buildTeamList(data));
+          const fetchedMatches = data.slice(0, 4);
+          const fetchedTeams = buildTeamList(data);
+          setRawMatches(fetchedMatches);
+          setRawTeams(fetchedTeams);
+          setMatches(fetchedMatches);
+          setTeams(fetchedTeams);
         }
       } catch (err) {
         console.error("Football fetch error:", err);
         setError("Could not load football data, using fallback values.");
+        setRawMatches(defaultMatches);
+        setRawTeams(defaultTeams);
+        setMatches(defaultMatches);
+        setTeams(defaultTeams);
       } finally {
         setLoading(false);
       }
@@ -122,6 +134,38 @@ const Football = () => {
 
     fetchMatches();
   }, []);
+
+  useEffect(() => {
+    const query = searchParams.get("query")?.trim().toLowerCase();
+    if (!query) {
+      setMatches(rawMatches);
+      setTeams(rawTeams);
+      setError(null);
+      return;
+    }
+
+    const filteredMatches = rawMatches.filter((match) => {
+      const home = match.homeTeam?.toLowerCase() || "";
+      const away = match.awayTeam?.toLowerCase() || "";
+      const league = match.league?.toLowerCase() || "";
+      return home.includes(query) || away.includes(query) || league.includes(query);
+    });
+
+    const filteredTeams = rawTeams.filter((team) => {
+      const teamName = team.team?.toLowerCase() || "";
+      const league = team.league?.toLowerCase() || "";
+      return teamName.includes(query) || league.includes(query);
+    });
+
+    setMatches(filteredMatches);
+    setTeams(filteredTeams);
+
+    if (!filteredMatches.length && !filteredTeams.length) {
+      setError("No teams or matches found for that search.");
+    } else {
+      setError(null);
+    }
+  }, [searchParams, rawMatches, rawTeams]);
 
   return (
     <div className="space-y-12">

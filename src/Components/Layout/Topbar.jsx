@@ -1,6 +1,6 @@
 import { Bell, Search, User, LogOut } from "lucide-react";
 
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { useState } from "react";
 
 import { useAuth } from "../../Context/AuthContext";
@@ -9,6 +9,7 @@ const Topbar = () => {
 
   const { logout, user } = useAuth();
   const navigate = useNavigate();
+  const location = useLocation();
   const [showMenu, setShowMenu] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
 
@@ -22,7 +23,12 @@ const Topbar = () => {
     event.preventDefault();
     const query = searchTerm.trim();
     if (!query) return;
-    navigate(`/music?query=${encodeURIComponent(query)}`);
+
+    const targetPath = location.pathname.startsWith("/football")
+      ? "/football"
+      : "/music";
+
+    navigate(`${targetPath}?query=${encodeURIComponent(query)}`);
   };
 
   return (
