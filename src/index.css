@@ -1,1 +1,114 @@
 @import "tailwindcss";
+
+:root {
+  color-scheme: dark;
+  --bg: #030712;
+  --surface: #0f172a;
+  --card: #111827;
+  --text: #f8fafc;
+  --muted: #94a3b8;
+  --border: #1f2937;
+  --input: #0f172a;
+  --button: #22c55e;
+  --button-text: #0f172a;
+}
+
+html.light {
+  color-scheme: light;
+  --bg: #f8fafc;
+  --surface: #ffffff;
+  --card: #f8fafc;
+  --text: #0f172a;
+  --muted: #475569;
+  --border: #cbd5e1;
+  --input: #f8fafc;
+  --button: #22c55e;
+  --button-text: #0f172a;
+}
+
+html.dark {
+  color-scheme: dark;
+}
+
+html,
+body,
+#root {
+  min-height: 100%;
+}
+
+body {
+  background-color: var(--bg);
+  color: var(--text);
+  transition: background-color 0.25s ease, color 0.25s ease;
+}
+
+.theme-bg {
+  background-color: var(--bg);
+}
+
+.theme-surface {
+  background-color: var(--surface);
+}
+
+.theme-card {
+  background-color: var(--card);
+}
+
+.theme-text {
+  color: var(--text);
+}
+
+.theme-muted {
+  color: var(--muted);
+}
+
+.theme-border {
+  border-color: var(--border);
+}
+
+.theme-input {
+  color: var(--text);
+}
+
+.theme-input::placeholder {
+  color: var(--muted);
+  opacity: 0.8;
+}
+
+.theme-button {
+  background-color: var(--button);
+  color: var(--button-text);
+}
+
+html.light .bg-gray-950,
+html.light .bg-gray-900,
+html.light .bg-gray-800,
+html.light .bg-gray-700,
+html.light .bg-black,
+html.light .bg-gray-700,
+html.light .bg-gray-600,
+html.light .bg-gray-500 {
+  background-color: var(--surface) !important;
+}
+
+html.light .text-white,
+html.light .text-gray-100,
+html.light .text-gray-200,
+html.light .text-gray-300,
+html.light .text-gray-400 {
+  color: var(--text) !important;
+}
+
+html.light .border-gray-900,
+html.light .border-gray-800,
+html.light .border-gray-700,
+html.light .border-gray-600,
+html.light .border-gray-500 {
+  border-color: var(--border) !important;
+}
+
+html.light .bg-gray-100,
+html.light .bg-gray-200,
+html.light .bg-white {
+  background-color: #ffffff !important;
+}

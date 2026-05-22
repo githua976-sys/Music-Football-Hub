@@ -7,13 +7,13 @@ import { Outlet } from 'react-router-dom'
 const MainLayout = () => {
 
   return (
-    <div className="flex h-screen bg-gray-950 text-white overflow-hidden">
+    <div className="flex h-screen overflow-hidden theme-bg theme-text">
 
-{/* Sidebar */}
-<Sidebar/>
+      {/* Sidebar */}
+      <Sidebar/>
 
-{/* Main Content */}
-  <div className="flex flex-col flex-1">
+      {/* Main Content */}
+      <div className="flex flex-col flex-1">
 
 <Topbar/>
 

@@ -1,13 +1,15 @@
-import { Bell, Search, User, LogOut } from "lucide-react";
+import { Bell, Search, User, LogOut, Sun, Moon } from "lucide-react";
 
 import { useNavigate, useLocation } from "react-router-dom";
 import { useState } from "react";
 
 import { useAuth } from "../../Context/AuthContext";
+import { useTheme } from "../../Context/ThemeContext";
 
 const Topbar = () => {
 
   const { logout, user } = useAuth();
+  const { theme, toggleTheme } = useTheme();
   const navigate = useNavigate();
   const location = useLocation();
   const [showMenu, setShowMenu] = useState(false);
@@ -33,10 +35,10 @@ const Topbar = () => {
 
   return (
 
-    <header className="h-20 border-b border-gray-800 bg-gray-950 px-6 flex items-center justify-between">
+    <header className="h-20 border-b theme-border theme-surface px-6 flex items-center justify-between">
 
       {/* Search Bar */}
-      <form onSubmit={handleTopbarSearch} className="flex items-center bg-gray-900 rounded-xl px-4 py-3 w-[350px]">
+      <form onSubmit={handleTopbarSearch} className="flex items-center theme-card rounded-xl px-4 py-3 w-[350px] border border-gray-800">
 
         <Search
           size={18}
@@ -48,13 +50,22 @@ const Topbar = () => {
           value={searchTerm}
           onChange={(event) => setSearchTerm(event.target.value)}
           placeholder="Search songs, teams, players..."
-          className="bg-transparent outline-none ml-3 text-sm text-white w-full"
+          className="bg-transparent outline-none ml-3 text-sm text-white w-full theme-input"
         />
 
       </form>
 
       {/* Right Section */}
-      <div className="flex items-center gap-5">
+      <div className="flex items-center gap-3">
+
+        <button
+          type="button"
+          onClick={toggleTheme}
+          className="rounded-full bg-gray-800 p-2 text-gray-300 hover:bg-gray-700 transition"
+          aria-label="Toggle theme"
+        >
+          {theme === "dark" ? <Sun size={18} /> : <Moon size={18} />}
+        </button>
 
         {/* Notification */}
         <button className="relative">
