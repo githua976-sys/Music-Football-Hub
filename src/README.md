@@ -38,7 +38,6 @@ Music Football Hub is a modern React dashboard application that combines music a
 
 # Project Structure
 
-```plaintext
 src/
  ├── Components/
  ├── Context/
