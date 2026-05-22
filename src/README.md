@@ -29,7 +29,7 @@ Music Football Hub is a modern React dashboard application that combines music a
 
 ## APIs
 - Deezer API
-- TheSportsDB API
+- TheFootball API
 
 ## Authentication
 - Firebase Authentication
