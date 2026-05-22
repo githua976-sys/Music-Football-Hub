@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useSearchParams } from "react-router-dom";
 import MusicCard from "../Components/Layout/Music/MusicCard";
 import SectionHeader from "../Components/Shared/SectionHeader";
 import { searchSongs } from "../Services/Musicapi";
@@ -60,7 +61,8 @@ const Music = () => {
     },
   ];
 
-  const [searchQuery, setSearchQuery] = useState("top hits");
+  const [searchParams] = useSearchParams();
+  const [searchQuery, setSearchQuery] = useState(() => searchParams.get("query")?.trim() || "top hits");
   const [trendingSongs, setTrendingSongs] = useState(defaultTrending);
   const [recentSongs, setRecentSongs] = useState(defaultRecent);
   const [error, setError] = useState(null);
@@ -99,8 +101,11 @@ const Music = () => {
   };
 
   useEffect(() => {
-    fetchSongs(searchQuery);
-  }, []);
+    const query = searchParams.get("query")?.trim();
+    const activeQuery = query || "top hits";
+    setSearchQuery(activeQuery);
+    fetchSongs(activeQuery);
+  }, [searchParams]);
 
   const handleSearchSubmit = async (event) => {
     event.preventDefault();

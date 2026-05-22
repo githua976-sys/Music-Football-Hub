@@ -10,6 +10,7 @@ const Topbar = () => {
   const { logout, user } = useAuth();
   const navigate = useNavigate();
   const [showMenu, setShowMenu] = useState(false);
+  const [searchTerm, setSearchTerm] = useState("");
 
   // Logout Function
   const handleLogout = async () => {
@@ -17,12 +18,19 @@ const Topbar = () => {
     navigate("/login");
   };
 
+  const handleTopbarSearch = (event) => {
+    event.preventDefault();
+    const query = searchTerm.trim();
+    if (!query) return;
+    navigate(`/music?query=${encodeURIComponent(query)}`);
+  };
+
   return (
 
     <header className="h-20 border-b border-gray-800 bg-gray-950 px-6 flex items-center justify-between">
 
       {/* Search Bar */}
-      <div className="flex items-center bg-gray-900 rounded-xl px-4 py-3 w-[350px]">
+      <form onSubmit={handleTopbarSearch} className="flex items-center bg-gray-900 rounded-xl px-4 py-3 w-[350px]">
 
         <Search
           size={18}
@@ -31,11 +39,13 @@ const Topbar = () => {
 
         <input
           type="text"
+          value={searchTerm}
+          onChange={(event) => setSearchTerm(event.target.value)}
           placeholder="Search songs, teams, players..."
           className="bg-transparent outline-none ml-3 text-sm text-white w-full"
         />
 
-      </div>
+      </form>
 
       {/* Right Section */}
       <div className="flex items-center gap-5">
